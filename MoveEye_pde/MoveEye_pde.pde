@@ -3,11 +3,11 @@
  */
 
 float x, y, z;
-float objects[][];
+Doos[] objects;
 float yawhoek, pitchhoek;
 float gravity = 0.75;
-float terminal_speed = 5;
-float jump_speed = -6;
+float terminal_speed = 4;
+float jump_speed = -5;
 float dy = 0;
 boolean jump = false;
 boolean landed = true;
@@ -20,31 +20,16 @@ void setup() {
   z = -1000.0;
   fill(204);
   size(1000, 400, P3D);
-  objects = new float[6][3];
+  objects = new Doos[7];
   
-  objects[0][0] = 500.0;
-  objects[0][1] = 400.0;
-  objects[0][2] = 300.0;
-  
-  objects[1][0] = -300.0;
-  objects[1][1] = -400.0;
-  objects[1][2] = 100.0;
-  
-  objects[2][0] = -200.0;
-  objects[2][1] = 600.0;
-  objects[2][2] = 250.0;
-  
-  objects[3][0] = 200.0;
-  objects[3][1] = -610.0;
-  objects[3][2] = 200.0;
-  
-  objects[4][0] = -600.0;
-  objects[4][1] = 2000.0;
-  objects[4][2] = 300.0;
-  
-  objects[5][0] = 0.0;
-  objects[5][1] = 0.0;
-  objects[5][2] = 10.0;
+  objects[0] = new Doos(500.0, 400.0, 300.0, 0);
+  objects[1] = new Doos(-300.0, -400.0, 100.0, 0);  
+  objects[2] = new Doos(-200.0, 600.0, 250.0, 0);
+  objects[3] = new Doos(200.0, -610.0 , 200.0, 0);
+  objects[4] = new Doos(-600.0, 2000.0, 300.0, 0);
+  objects[5] = new Doos(0.0, 0.0, 10.0, 0);
+  objects[6] = new Doos(-10000.0, 0.0, -10000.0, 10000.0, 1.0, 10000.0, 204);
+
   keys = new boolean[256];
   for (boolean b : keys)
   {
@@ -83,6 +68,14 @@ void draw() {
   {
     jump = true;
   }
+  if (arrows[0])
+  {
+    pitchhoek += radians(3);
+  }
+  if (arrows[1])
+  {
+    pitchhoek -= radians(3);
+  }
   if (arrows[2])
   {
     yawhoek -= radians(3);
@@ -108,10 +101,7 @@ void draw() {
   {
     dy = jump_speed;
   }
-  if (jump)
-  {
-    jump = false;
-  }
+  jump = false;
   y += dy;
   camera(0.0, -20.0, 0.0,
          0.0, -19.0, 5.0,
@@ -122,40 +112,20 @@ void draw() {
 void drawObjects()
 {
   rotateY(yawhoek);
-  translate(-x, -y, -z);
-  beginShape();
-    vertex(-10000.0, -y, -10000.0);
-    vertex(-10000.0, -y, 10000.0);
-    vertex(10000.0, -y, 10000.0);
-    vertex(10000.0, -y, -10000.0);
-  endShape();
-  fill(255);
-  int i = 0;
-  while (i <= 5)
+  for (Doos d : objects)
   {
-    translate((objects[i][0] - x), -y, (objects[i][1] - z));
-    box(objects[i][2]);
-    translate((x - objects[i][0]), y, (z - objects[i][1]));
-    i++;
+    d.draw(x, y, z);
   }
-  translate(x, y, z);
-  fill(204);
 }
 
 boolean collision()
 {
-  boolean ret = false;
-  for (int i=0; i <= 5; i++)
+  for (Doos d : objects)
   {
-    float j = objects[i][2] / 2;
-    boolean a = (x > (objects[i][0] - j));
-    boolean b = (x < (objects[i][0] + j));
-    boolean c = (z > (objects[i][1] - j));
-    boolean d = (z < (objects[i][1] + j));
-    boolean e = ((y + 20) > (objects[i][2] / -2));
-    ret |= (a && b && c && d && e);
+    if (d.inDoos(x, y, z)) return true;
   }
-  return ret;
+  return false;
+
 }
 
 void keyPressed()
