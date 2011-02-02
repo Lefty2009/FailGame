@@ -4,11 +4,11 @@ import processing.opengl.*;
  */
 
 float x, y, z;
-Doos[] objects;
+Weirdo[] objects;
 float yawhoek, pitchhoek;
-float gravity = 0.75;
-float terminal_speed = 4;
-float jump_speed = -5;
+float gravity = 0.5;
+float terminal_speed = 8;
+float jump_speed = -10;
 float dy = 0;
 boolean jump = false;
 boolean landed = true;
@@ -18,18 +18,20 @@ boolean[] arrows;
 void setup() {
   x = 0.0;
   y = -200.0;
-  z = -1000.0;
+  z = -2000.0;
   fill(204);
   size(1000, 400, OPENGL);
-  objects = new Doos[7];
+  PImage skin = loadImage("grasstexture.jpg");
+  PImage skin2 = loadImage("woodtexture.jpg");
+  objects = new Weirdo[7];
   
-  objects[0] = new Doos(500.0, 400.0, 300.0, 255);
-  objects[1] = new Doos(-300.0, -400.0, 100.0, 255);  
-  objects[2] = new Doos(-200.0, 600.0, 250.0, 255);
-  objects[3] = new Doos(200.0, -610.0 , 200.0, 255);
-  objects[4] = new Doos(-600.0, 2000.0, 300.0, 255);
-  objects[5] = new Doos(0.0, 0.0, 10.0, 255);
-  objects[6] = new Doos(-10000.0, 0.0, -10000.0, 10000.0, 1.0, 10000.0, 20);
+  objects[0] = new Doos(500.0, 400.0, 220.0, skin2);
+  objects[1] = new Doos(-300.0, -400.0, 150.0, skin2);
+  objects[2] = new Doos(-200.0, 600.0, 250.0, skin2);
+  objects[3] = new Doos(200.0, -610.0 , 200.0, skin2);
+  objects[4] = new Doos(-600.0, 2000.0, 300.0, skin2);
+  objects[5] = new Doos(0.0, 0.0, 50.0, skin2);
+  objects[6] = new XZPlane(-5000.0, 0.0,  -5000.0, 5000.0, 0.0, 5000.0, skin);
 
   keys = new boolean[256];
   for (boolean b : keys)
@@ -41,10 +43,11 @@ void setup() {
   {
     k = false;
   }
+  noStroke();
 }
 
 void draw() {
-  pointLight(255,255,255,0,0,-2000);
+  spotLight(200,200,200, -3000, -2000, -3000, 1, 1, 1, radians(180), 10);
   landed = false;
   if ((keys['w']) || (keys['W']))
   {
@@ -87,7 +90,7 @@ void draw() {
     yawhoek += radians(3);
   }
   background(100,100,255);
-  if ((y >= 0) || collision())
+  if ((y >= -10) || collision())
   {
     dy = 0;
     landed = true;
@@ -114,7 +117,7 @@ void draw() {
 void drawObjects()
 {
   rotateY(yawhoek);
-  for (Doos d : objects)
+  for (Weirdo d : objects)
   {
     d.draw(x, y, z);
   }
@@ -122,7 +125,7 @@ void drawObjects()
 
 boolean collision()
 {
-  for (Doos d : objects)
+  for (Weirdo d : objects)
   {
     if (d.inDoos(x, y, z)) return true;
   }
