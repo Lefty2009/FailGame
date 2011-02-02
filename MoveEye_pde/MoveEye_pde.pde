@@ -1,3 +1,4 @@
+import processing.opengl.*;
 /**
  * Test Game Shizzle
  */
@@ -19,16 +20,16 @@ void setup() {
   y = -200.0;
   z = -1000.0;
   fill(204);
-  size(1000, 400, P3D);
+  size(1000, 400, OPENGL);
   objects = new Doos[7];
   
-  objects[0] = new Doos(500.0, 400.0, 300.0, 0);
-  objects[1] = new Doos(-300.0, -400.0, 100.0, 0);  
-  objects[2] = new Doos(-200.0, 600.0, 250.0, 0);
-  objects[3] = new Doos(200.0, -610.0 , 200.0, 0);
-  objects[4] = new Doos(-600.0, 2000.0, 300.0, 0);
-  objects[5] = new Doos(0.0, 0.0, 10.0, 0);
-  objects[6] = new Doos(-10000.0, 0.0, -10000.0, 10000.0, 1.0, 10000.0, 204);
+  objects[0] = new Doos(500.0, 400.0, 300.0, 255);
+  objects[1] = new Doos(-300.0, -400.0, 100.0, 255);  
+  objects[2] = new Doos(-200.0, 600.0, 250.0, 255);
+  objects[3] = new Doos(200.0, -610.0 , 200.0, 255);
+  objects[4] = new Doos(-600.0, 2000.0, 300.0, 255);
+  objects[5] = new Doos(0.0, 0.0, 10.0, 255);
+  objects[6] = new Doos(-10000.0, 0.0, -10000.0, 10000.0, 1.0, 10000.0, 20);
 
   keys = new boolean[256];
   for (boolean b : keys)
@@ -43,6 +44,7 @@ void setup() {
 }
 
 void draw() {
+  pointLight(255,255,255,0,0,-2000);
   landed = false;
   if ((keys['w']) || (keys['W']))
   {
@@ -103,8 +105,8 @@ void draw() {
   }
   jump = false;
   y += dy;
-  camera(0.0, -20.0, 0.0,
-         0.0, -19.0, 5.0,
+  camera(0.0, -30.0, 0.0,
+         0.0, -29.0, 5.0,
          0.0, 1.0, 0.0);
   drawObjects();
 }

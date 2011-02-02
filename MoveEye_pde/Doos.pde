@@ -24,7 +24,6 @@ public class Doos
   }
   public void draw(float x, float y, float z)
   {
-    fill(this.colour);
     beginShape();
       vertex(this.x1 - x, this.y1 - y, this.z1 - z);
       vertex(this.x1 - x, this.y1 - y, this.z2 - z);
@@ -62,7 +61,6 @@ public class Doos
       vertex(this.x2 - x, this.y2 - y, this.z2 - z);
       vertex(this.x2 - x, this.y1 - y, this.z2 - z);
     endShape();
-    fill(204);
   }
   
   boolean inDoos(float x, float y, float z)
