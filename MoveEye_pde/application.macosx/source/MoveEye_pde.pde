@@ -21,12 +21,10 @@ void setup() {
   y = -200.0;
   z = -2000.0;
   fill(204);
-  size(1024, 600, OPENGL);
+  size(1000, 400, OPENGL);
   PImage skin = loadImage("grasstexture.jpg");
   PImage skin2 = loadImage("woodtexture2.jpg");
-  PImage skin3 = loadImage("rooftexture.jpg");
-
-  objects = new Weirdo[16];
+  objects = new Weirdo[7];
   
   objects[0] = new Doos(500.0, 400.0, 220.0, skin2);
   objects[1] = new Doos(-300.0, -400.0, 150.0, skin2);
@@ -34,16 +32,7 @@ void setup() {
   objects[3] = new Doos(200.0, -610.0 , 200.0, skin2);
   objects[4] = new Doos(-600.0, 2000.0, 300.0, skin2);
   objects[5] = new Doos(0.0, 0.0, 50.0, skin2);
-  objects[6] = new Doos(4000.0, -50.0, 4000.0, 8000.0, -1000.0, 8000.0, skin2);
-  objects[7] = new Doos(550.0, -320.0, 450.0, 650.0, -350.0, 550.0, skin);
-  objects[8] = new Doos(600.0, -350.0, 750.0, 680.0, -380.0, 810.0, skin2);
-  objects[9] = new Doos(650.0, -380.0, 1050.0, 710.0, -410.0, 1070.0, skin3);
-  objects[10] = new Doos(700.0, -410.0, 1350.0, 740.0, -440.0, 1330.0, skin);
-  objects[11] = new Doos(750.0, -440.0, 1650.0, 770.0, -470.0, 1590.0, skin2);
-  objects[12] = new Doos(800.0, -470.0, 1950.0, 1500.0, -500.0, 3000.0, skin3);
-  objects[13] = new Doos(1530.0, -500.0, 3320.0, 3800.0, -530.0, 3900.0, skin2);
-  objects[14] = new Doos(5000.0, -50.0, 6000.0, 5100.0, -150.0, 6100.0, skin3);
-  objects[15] = new XZPlane(-5000.0, 0.0,  -5000.0, 5000.0, 0.0, 5000.0, skin);
+  objects[6] = new XZPlane(-5000.0, 0.0,  -5000.0, 5000.0, 0.0, 5000.0, skin);
 
   keys = new boolean[256];
   for (boolean b : keys)
@@ -56,7 +45,6 @@ void setup() {
     k = false;
   }
   noStroke();
-  noCursor();
 }
 
 void draw() {
@@ -121,8 +109,8 @@ void draw() {
   }
   jump = false;
   y += dy;
-  camera(0.0, -40.0, 0.0,
-         0.0, -39.0, 5.0,
+  camera(0.0, -30.0, 0.0,
+         0.0, -29.0, 5.0,
          0.0, 1.0, 0.0);
   drawObjects();
 }
