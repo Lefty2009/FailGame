@@ -10,6 +10,7 @@ float gravity = 0.5;
 float terminal_speed = 8;
 float jump_speed = -10;
 float dy = 0;
+float dx = 5.0;
 boolean jump = false;
 boolean landed = true;
 boolean[] keys;
@@ -22,7 +23,7 @@ void setup() {
   fill(204);
   size(1000, 400, OPENGL);
   PImage skin = loadImage("grasstexture.jpg");
-  PImage skin2 = loadImage("woodtexture.jpg");
+  PImage skin2 = loadImage("woodtexture2.jpg");
   objects = new Weirdo[7];
   
   objects[0] = new Doos(500.0, 400.0, 220.0, skin2);
@@ -51,23 +52,23 @@ void draw() {
   landed = false;
   if ((keys['w']) || (keys['W']))
   {
-    x += 5.0 * sin(-yawhoek);
-    z += 5.0 * cos(-yawhoek);
+    x += dx * sin(-yawhoek);
+    z += dx * cos(-yawhoek);
   }
   if ((keys['s']) || (keys['S']))
   {
-    x -= 5.0 * sin(-yawhoek);
-    z -= 5.0 * cos(-yawhoek);
+    x -= dx * sin(-yawhoek);
+    z -= dx * cos(-yawhoek);
   }
   if ((keys['a']) || (keys['A']))
   {
-    x += 5.0 * sin(-yawhoek + PI * 0.5);
-    z += 5.0 * cos(-yawhoek + PI * 0.5);
+    x += dx * sin(-yawhoek + PI * 0.5);
+    z += dx * cos(-yawhoek + PI * 0.5);
   }
   if ((keys['d']) || (keys['D']))
   {
-    x -= 5.0 * sin(-yawhoek + PI * 0.5);
-    z -= 5.0 * cos(-yawhoek + PI * 0.5);
+    x -= dx * sin(-yawhoek + PI * 0.5);
+    z -= dx * cos(-yawhoek + PI * 0.5);
   }
   if (keys[' '])
   {
@@ -141,6 +142,7 @@ void keyPressed()
     if (keyCode == DOWN) arrows[1] = true;
     if (keyCode == LEFT) arrows[2] = true;
     if (keyCode == RIGHT) arrows[3] = true;
+    if (keyCode == SHIFT) dx = 10.0;
   }
   else
   {
@@ -156,6 +158,7 @@ void keyReleased()
     if (keyCode == DOWN) arrows[1] = false;
     if (keyCode == LEFT) arrows[2] = false;
     if (keyCode == RIGHT) arrows[3] = false;
+    if (keyCode == SHIFT) dx = 5.0;
   }
   else
   {
