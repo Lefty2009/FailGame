@@ -1,3 +1,4 @@
+import processing.opengl.*;
 /**
  * Test Game Shizzle
  */
@@ -20,7 +21,7 @@ void setup() {
   y = -200.0;
   z = -2000.0;
   fill(204);
-  size(1000, 400, P3D);
+  size(1000, 400, OPENGL);
 
   objects = new Weirdo[16];
   
