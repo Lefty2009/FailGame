@@ -142,7 +142,7 @@ void keyPressed()
     if (keyCode == DOWN) arrows[1] = true;
     if (keyCode == LEFT) arrows[2] = true;
     if (keyCode == RIGHT) arrows[3] = true;
-    if (keyCode == SHIFT) dx = 10.0;
+    if ((keyCode == SHIFT) && landed) dx = 10.0;
   }
   else
   {
